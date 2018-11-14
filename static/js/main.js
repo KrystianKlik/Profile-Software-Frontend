@@ -1,12 +1,23 @@
-var password = "Abc def";
+password = "abba";
 password = password.toUpperCase();
-var password_length = password.length;
+password_length = 0
 var letters = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
 var buttons = [];
-var hashed_password = "";
+hashed_password = "";
 var lives = 6
 
-$(document).ready(function(){
+let url = 'http://quotesondesign.com/wp-json/posts?filter[orderby]=rand';
+
+fetch(url)
+.then(res => res.json())
+.then((out) => {
+  password = out[0].title;
+  password = password.toUpperCase();
+  password_length = password.length;
+  alert(password);
+})
+.catch(err => { throw err });
+
 
   $('#lives').html('Lives left: '+lives);
 
@@ -24,7 +35,7 @@ $(document).ready(function(){
       }
       $(".keyboard").html(buttons.join(""));
     }
-});
+
 
 function show_password()
 {
@@ -67,6 +78,7 @@ function check(nr)
       $('.keyboard').html('');
       $('#password').html(password);
     }
+
   }
 
   if (password == hashed_password)
