@@ -4,6 +4,7 @@ password_length = 0
 var letters = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
 var buttons = [];
 hashed_password = "";
+
 var lives = 6
 
 let url = 'http://quotesondesign.com/wp-json/posts?filter[orderby]=rand';
@@ -14,19 +15,32 @@ fetch(url)
   password = out[0].title;
   password = password.toUpperCase();
   password_length = password.length;
-  alert(password);
+  $('#quote').html(out[0].content);
+  // uncomment for checking name of author in console
+  // console.log(password);
 })
 .catch(err => { throw err });
 
+
+
+ setTimeout(function () {
 
   $('#lives').html('Lives left: '+lives);
 
   for(i=0; i<password_length; i++)
   {
     if(password.charAt(i)==" ")hashed_password += " ";
+    else if (password.charAt(i)=="-")hashed_password +='-'
+    else if (password.charAt(i)==".")hashed_password +='.'
+    else if (password.charAt(i)==",")hashed_password +=','
+    else if (password.charAt(i)=="'")hashed_password +="'"
     else hashed_password += "-";
   }
   $("#password").html(hashed_password);
+
+}, 1500);
+
+
 
   //generate keyboard
   if ($(".keyboard").empty) {
@@ -89,6 +103,7 @@ function check(nr)
 
   }
 }
+
 
 // url for fetching API
 // url = 'http://quotesondesign.com/wp-json/posts?filter[orderby]=rand'
